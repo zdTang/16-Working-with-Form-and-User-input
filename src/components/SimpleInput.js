@@ -10,9 +10,17 @@ const SimpleInput = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
+    //  add a simple validation
+    if (enteredName.trim().length === 0) {
+      return;
+    }
+
     console.log(enteredName);
     setEnteredName(""); // reset the input
     var result = nameInputRef.current.value; // get value with REF
+    if (result.trim() === "") {
+      return;
+    }
     //nameInputRef.current.value="";   // legal, but it will manipulate DOM, let REACT to do it
     console.log("ref=", result);
   };

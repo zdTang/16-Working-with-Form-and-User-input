@@ -5,7 +5,9 @@ const SimpleInput = (props) => {
   console.log("SimpleInput");
   const [enteredName, setEnteredName] = useState("");
   const nameInputRef = useRef();
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(true);
+  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+
   useEffect(() => {
     if (enteredNameIsValid) {
       console.log("Name Input is valid, request HTTP now!");
@@ -18,6 +20,7 @@ const SimpleInput = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
+    setEnteredNameTouched(true);
     //  add a simple validation
     if (enteredName.trim().length === 0) {
       setEnteredNameIsValid(false);
@@ -36,9 +39,10 @@ const SimpleInput = (props) => {
     console.log("ref=", result);
   };
 
-  const nameInputClasses = enteredNameIsValid
-    ? "form-control"
-    : "form-control invalid";
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+  const nameInputClasses = nameInputIsInvalid
+    ? "form-control invalid"
+    : "form-control";
   return (
     <form onSubmit={submitHandler}>
       <div className={nameInputClasses}>
@@ -51,7 +55,7 @@ const SimpleInput = (props) => {
           ref={nameInputRef}
         />
       </div>
-      {!enteredNameIsValid && <p className="error-text">invalid name</p>}
+      {nameInputIsInvalid && <p className="error-text">invalid name</p>}
       <div className="form-actions">
         <button>Submit</button>
       </div>

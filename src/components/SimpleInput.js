@@ -1,23 +1,29 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const SimpleInput = (props) => {
   // if use only one time, and don't need check directly, REF would be a good choose
   console.log("SimpleInput");
   const [enteredName, setEnteredName] = useState("");
   const nameInputRef = useRef();
-  const [enteredNameIsValid, setInteredNameIsValid] = useState(true);
+  const [enteredNameIsValid, setEnteredNameIsValid] = useState(true);
+  useEffect(() => {
+    if (enteredNameIsValid) {
+      console.log("Name Input is valid, request HTTP now!");
+    }
+  }, enteredNameIsValid);
+
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
-    setInteredNameIsValid(true);
+    setEnteredNameIsValid(true);
   };
   const submitHandler = (event) => {
     event.preventDefault();
     //  add a simple validation
     if (enteredName.trim().length === 0) {
-      setInteredNameIsValid(false);
+      setEnteredNameIsValid(false);
       return;
     }
-    setInteredNameIsValid(true);
+    setEnteredNameIsValid(true);
     console.log(enteredName);
     setEnteredName(""); // reset the input
 

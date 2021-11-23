@@ -43,6 +43,14 @@ const SimpleInput = (props) => {
   const nameInputClasses = nameInputIsInvalid
     ? "form-control invalid"
     : "form-control";
+
+  const nameInputBlurHandler = (event) => {
+    setEnteredNameTouched(true);
+    if (enteredName.trim().length === 0) {
+      setEnteredNameIsValid(false);
+    }
+  };
+
   return (
     <form onSubmit={submitHandler}>
       <div className={nameInputClasses}>
@@ -52,6 +60,7 @@ const SimpleInput = (props) => {
           id="name"
           value={enteredName}
           onChange={nameChangeHandler}
+          onBlur={nameInputBlurHandler}
           ref={nameInputRef}
         />
       </div>

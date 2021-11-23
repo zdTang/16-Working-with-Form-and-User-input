@@ -5,18 +5,23 @@ const SimpleInput = (props) => {
   console.log("SimpleInput");
   const [enteredName, setEnteredName] = useState("");
   const nameInputRef = useRef();
+  const [enteredNameIsValid, setInteredNameIsValid] = useState(true);
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
+    setInteredNameIsValid(true);
   };
   const submitHandler = (event) => {
     event.preventDefault();
     //  add a simple validation
     if (enteredName.trim().length === 0) {
+      setInteredNameIsValid(false);
       return;
     }
-
+    setInteredNameIsValid(true);
     console.log(enteredName);
     setEnteredName(""); // reset the input
+
+    // Use Ref Approaches
     var result = nameInputRef.current.value; // get value with REF
     if (result.trim() === "") {
       return;
@@ -37,6 +42,7 @@ const SimpleInput = (props) => {
           ref={nameInputRef}
         />
       </div>
+      {!enteredNameIsValid && <p className="error-text">invalid name</p>}
       <div className="form-actions">
         <button>Submit</button>
       </div>

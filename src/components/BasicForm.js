@@ -1,9 +1,9 @@
-import { useState } from "react";
-import useValidate from "../hooks/use-validat";
+import useValidate from "../hooks/use-validate";
 
 const BasicForm = (props) => {
   console.log("basic from run !");
 
+  // Control state of firstName
   const {
     enteredValue: enteredName,
     valueChangeHandler: nameChangeHandler,
@@ -11,6 +11,24 @@ const BasicForm = (props) => {
     isValueDisplayOK: isNameDisplayOK,
     valueStyle: nameStyle,
   } = useValidate((item) => item.trim().length !== 0);
+
+  // Control state of last Name
+  const {
+    enteredValue: enteredLastName,
+    valueChangeHandler: lastNameChangeHandler,
+    valueBlurHandler: lastNameBlurHandler,
+    isValueDisplayOK: isLastNameDisplayOK,
+    valueStyle: lastNameStyle,
+  } = useValidate((item) => item.trim().length !== 0);
+
+  // Control state of Email
+  const {
+    enteredValue: enteredEmail,
+    valueChangeHandler: emailChangeHandler,
+    valueBlurHandler: emailBlurHandler,
+    isValueDisplayOK: isEmailDisplayOK,
+    valueStyle: emailStyle,
+  } = useValidate((item) => item.includes("@"));
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -38,14 +56,32 @@ const BasicForm = (props) => {
             <p className="error-text">Name cannot be empty.</p>
           )}
         </div>
-        <div className="form-control">
-          <label htmlFor="name">Last Name</label>
-          <input type="text" id="name" />
+        <div className={lastNameStyle}>
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurHandler}
+            value={enteredLastName}
+          />
+          {!isLastNameDisplayOK && (
+            <p className="error-text">Name cannot be empty.</p>
+          )}
         </div>
       </div>
-      <div className="form-control">
-        <label htmlFor="name">E-Mail Address</label>
-        <input type="text" id="name" />
+      <div className={emailStyle}>
+        <label htmlFor="email">E-Mail Address</label>
+        <input
+          type="text"
+          id="email"
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          value={enteredEmail}
+        />
+        {!isEmailDisplayOK && (
+          <p className="error-text">Entered email address is not valid.</p>
+        )}
       </div>
       <div className="form-actions">
         <button>Submit</button>

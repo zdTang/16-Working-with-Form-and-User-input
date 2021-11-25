@@ -27,6 +27,7 @@ function useValidate(validateValue) {
     enteredValue,
     valueChangeHandler,
     valueBlurHandler,
+    isValueValid,
     isValueDisplayOK,
     valueStyle,
   };

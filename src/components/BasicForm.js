@@ -8,6 +8,7 @@ const BasicForm = (props) => {
     enteredValue: enteredName,
     valueChangeHandler: nameChangeHandler,
     valueBlurHandler: nameBlurHandler,
+    isValueValid: isFirstNameValid,
     isValueDisplayOK: isNameDisplayOK,
     valueStyle: nameStyle,
   } = useValidate((item) => item.trim().length !== 0);
@@ -17,6 +18,7 @@ const BasicForm = (props) => {
     enteredValue: enteredLastName,
     valueChangeHandler: lastNameChangeHandler,
     valueBlurHandler: lastNameBlurHandler,
+    isValueValid: isLastNameValid,
     isValueDisplayOK: isLastNameDisplayOK,
     valueStyle: lastNameStyle,
   } = useValidate((item) => item.trim().length !== 0);
@@ -26,12 +28,21 @@ const BasicForm = (props) => {
     enteredValue: enteredEmail,
     valueChangeHandler: emailChangeHandler,
     valueBlurHandler: emailBlurHandler,
+    isValueValid: isEmailValid,
     isValueDisplayOK: isEmailDisplayOK,
     valueStyle: emailStyle,
   } = useValidate((item) => item.includes("@"));
 
   const submitHandler = (event) => {
     event.preventDefault();
+    if (isEmailValid && isLastNameValid && isFirstNameValid) {
+      console.log("valid value");
+      console.log(enteredName);
+      console.log(enteredLastName);
+      console.log(enteredEmail);
+    } else {
+      console.log("invalid value!");
+    }
   };
 
   // Here find a issue, if don't comment the trim() line

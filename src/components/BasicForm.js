@@ -23,20 +23,22 @@ const BasicForm = (props) => {
     setEnteredName(event.target.value.trim());
     // }
   };
-  const nameBlueHandler = (event) => {
+  const nameBlurHandler = (event) => {
     setNameTouched(true);
     if (event.target.value.trim().length !== 0) {
       isNameValid = true;
     }
   };
-  let isNameValid = false;
-  if (isNameTouched && enteredName.trim().length !== 0) {
-    isNameValid = true;
-  } else if (!isNameTouched && enteredName.trim().length === 0) {
-    isNameValid = true;
+
+  let isNameValid = enteredName.trim().length !== 0;
+  let isNameDisplayOK = false;
+  if (isNameTouched && isNameValid) {
+    isNameDisplayOK = true;
+  } else if (!isNameTouched && !isNameValid) {
+    isNameDisplayOK = true;
   }
 
-  let nameStyle = isNameValid ? "form-control" : "form-control invalid";
+  let nameStyle = isNameDisplayOK ? "form-control" : "form-control invalid";
   return (
     <form onSubmit={submitHandler}>
       <div className="form-control">
@@ -46,10 +48,12 @@ const BasicForm = (props) => {
             type="text"
             id="name"
             onChange={nameChangeHandler}
-            onBlur={nameBlueHandler}
+            onBlur={nameBlurHandler}
             value={enteredName}
           />
-          {!isNameValid && <p className="error-text">Name cannot be empty.</p>}
+          {!isNameDisplayOK && (
+            <p className="error-text">Name cannot be empty.</p>
+          )}
         </div>
         <div className="form-control">
           <label htmlFor="name">Last Name</label>

@@ -4,31 +4,31 @@ function useValidate(validateValue) {
   const [enteredValue, setEnteredValue] = useState("");
   const [isValueTouched, setValueTouched] = useState(false);
 
-  const nameChangeHandler = (event) => {
+  const valueChangeHandler = (event) => {
     //setValueTouched(true);
     setEnteredValue(event.target.value);
   };
-  const nameBlurHandler = () => {
+  const valueBlurHandler = () => {
     setValueTouched(true);
   };
 
   //let isNameValid = enteredName.trim().length !== 0;
-  let isNameValid = validateValue(enteredName);
-  let isNameDisplayOK = false;
-  if (isNameTouched && isNameValid) {
-    isNameDisplayOK = true;
-  } else if (!isNameTouched && !isNameValid) {
-    isNameDisplayOK = true;
+  let isValueValid = validateValue(enteredValue);
+  let isValueDisplayOK = false;
+  if (isValueTouched && isValueValid) {
+    isValueDisplayOK = true;
+  } else if (!isValueTouched && !isValueValid) {
+    isValueDisplayOK = true;
   }
 
-  let nameStyle = isNameDisplayOK ? "form-control" : "form-control invalid";
+  let valueStyle = isValueDisplayOK ? "form-control" : "form-control invalid";
 
   return {
     enteredValue,
-    isValueTouched,
-    nameChangeHandler,
-    nameBlurHandler,
-    nameStyle,
+    valueChangeHandler,
+    valueBlurHandler,
+    isValueDisplayOK,
+    valueStyle,
   };
 }
 export default useValidate;

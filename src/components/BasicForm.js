@@ -11,6 +11,7 @@ const BasicForm = (props) => {
     isValueValid: isFirstNameValid,
     isValueDisplayOK: isNameDisplayOK,
     valueStyle: nameStyle,
+    reset: nameReset,
   } = useValidate((item) => item.trim().length !== 0);
 
   // Control state of last Name
@@ -21,6 +22,7 @@ const BasicForm = (props) => {
     isValueValid: isLastNameValid,
     isValueDisplayOK: isLastNameDisplayOK,
     valueStyle: lastNameStyle,
+    reset: lastNameReset,
   } = useValidate((item) => item.trim().length !== 0);
 
   // Control state of Email
@@ -31,12 +33,18 @@ const BasicForm = (props) => {
     isValueValid: isEmailValid,
     isValueDisplayOK: isEmailDisplayOK,
     valueStyle: emailStyle,
+    reset: emailReset,
   } = useValidate((item) => item.includes("@"));
 
+  const isFormValid = isEmailValid && isLastNameValid && isFirstNameValid;
   const submitHandler = (event) => {
     event.preventDefault();
-    if (isEmailValid && isLastNameValid && isFirstNameValid) {
+    if (isFormValid) {
       console.log("valid value");
+      nameReset();
+      lastNameReset();
+      emailReset();
+
       console.log(enteredName);
       console.log(enteredLastName);
       console.log(enteredEmail);
@@ -95,7 +103,7 @@ const BasicForm = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!isFormValid}>Submit</button>
       </div>
     </form>
   );

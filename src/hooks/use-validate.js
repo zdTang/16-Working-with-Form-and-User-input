@@ -23,6 +23,10 @@ function useValidate(validateValue) {
 
   let valueStyle = isValueDisplayOK ? "form-control" : "form-control invalid";
 
+  const reset = () => {
+    setEnteredValue("");
+    setValueTouched(false);
+  };
   return {
     enteredValue,
     valueChangeHandler,
@@ -30,6 +34,7 @@ function useValidate(validateValue) {
     isValueValid,
     isValueDisplayOK,
     valueStyle,
+    reset,
   };
 }
 export default useValidate;
